@@ -11,3 +11,7 @@ const firebaseConfig = {
     appId: "1:731208891868:web:456c3534fb35c2b91a6319",
     measurementId: "G-X649HRWQ81"
   };
+
+
+let pc = new RTCPeerConnection(servers);
+let remotestream
