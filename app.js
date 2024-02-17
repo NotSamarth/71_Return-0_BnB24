@@ -1,27 +1,33 @@
-import express from 'express';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import express from "express";
+import bodyParser from "body-parser";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path"; // Importing 'path'
+
+
+
 
 const app = express();
-const PORT =  3000;
+const PORT = 5500;
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const staticPath = path.join(__dirname ,  '/public');
 
-// Serve static files (HTML, CSS, JS) from the 'public' directory
+console.log(__dirname)
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.get("/", (req,res) => {
+  res.sendFile(path.join(__dirname, "public", "index", "index.html")); // Using 'path.join' to construct the file path
+  console.log("File sent");
 });
-
-app.get("/", (res,req) =>{
-  res.sendFile(path.join(__dirname + "/index.html"));
-})
 app.get('/patient', (req, res) => {
-  // Use res.sendFile() to send a file in response
   res.sendFile(path.join(__dirname, 'path/to/file.txt'));
 });
 
 app.get('/doctor', (req, res) => {
-  // Use res.sendFile() to send a file in response
   res.sendFile(path.join(__dirname, 'path/to/file.txt'));
+});
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+  console.log(__dirname + "/public/index/index.html");
 });
