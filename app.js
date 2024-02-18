@@ -1,33 +1,28 @@
 import express from "express";
-import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import path from "path"; // Importing 'path'
-
-
-
 
 const app = express();
 const PORT = 5500;
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const staticPath = path.join(__dirname ,  '/public');
 
-console.log(__dirname)
+// Serve static files from the 'public' directory
+app.use(express.static(__dirname + '/public'));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.get("/", (req,res) => {
-  res.sendFile(path.join(__dirname, "public", "index", "index.html")); // Using 'path.join' to construct the file path
-  console.log("File sent");
+// Define routes for each HTML file
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index/index.html");
 });
+
 app.get('/patient', (req, res) => {
-  res.sendFile(path.join(__dirname, 'path/to/file.txt'));
+  res.sendFile(__dirname + "/public/patient/patient.html");
 });
 
 app.get('/doctor', (req, res) => {
-  res.sendFile(path.join(__dirname, 'path/to/file.txt'));
+  res.sendFile(__dirname + "/public/doctor/doctor.html");
 });
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  console.log(__dirname + "/public/index/index.html");
 });
